@@ -1,0 +1,37 @@
+Select top 1000 
+
+PhotoObjAll.objid,
+
+zooVotes.nvote_tot,
+	zooVotes.p_el,
+	zooVotes.p_cw,
+	zooVotes.p_acw,
+	zooVotes.p_edge,
+	zooVotes.p_dk,
+	zooVotes.p_mg,
+	zooVotes.p_cs 
+
+into mydb.test2 from PhotoObjAll  
+join zooVotes on PhotoObjAll.objid = zooVotes.objid
+
+
+/* Order by vote count */
+SELECT TOP 1000 t1.nvote_tot,
+	count(t1.p_el) as cnt, 
+	(SELECT count(t2.p_el) FROM zooVotes t2 WHERE t2.nvote_tot >= t1.nvote_tot)
+
+into mydb.test_cnt2 from zooVotes t1 
+
+group by t1.nvote_tot
+order by t1.nvote_tot desc
+
+
+
+/* Testing whether we can get spectroscopic redshift from table join */
+SELECT TOP 1000
+SpecPhotoAll.z,
+PhotoObjAll.type_g
+into mydb.test_tab from PhotoObjAll
+join SpecPhotoAll on  PhotoObjAll.specObjID = SpecPhotoAll.specObjID
+
+
