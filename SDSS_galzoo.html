@@ -6047,7 +6047,7 @@ Overall correct fraction =  0.8852
 <div class="prompt input_prompt">In&nbsp;[58]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="c"># We can code up a summary transition-matrix to look at counts across predicted and actual categories</span>
+<div class=" highlight hl-ipython2"><pre><span class="c"># We can code up a summary confusion matrix to look at counts across predicted and actual categories</span>
 <span class="n">imax</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">res_df</span><span class="o">.</span><span class="n">actual</span><span class="p">)</span>
 <span class="n">rep</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">imax</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">imax</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span><span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">res_df</span><span class="p">)):</span>
@@ -7186,7 +7186,7 @@ Name: actual, dtype: int64
 <div class="prompt input_prompt">In&nbsp;[61]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="c"># As before, we can code up a transition-matrix to look at counts predicted vs actual</span>
+<div class=" highlight hl-ipython2"><pre><span class="c"># As before, let&#39;s look at the confusion matrix to look at counts predicted vs actual</span>
 <span class="c"># Classes:</span>
 <span class="c"># 0 - Ellipticals</span>
 <span class="c"># 1 - Spirals (face-on)</span>
@@ -8438,7 +8438,7 @@ Name: actual, dtype: int64
 <div class="prompt input_prompt">In&nbsp;[65]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="c"># We can compare the report matrix here to the unsampled set, definitely improvement in the last two classes</span>
+<div class=" highlight hl-ipython2"><pre><span class="c"># We can compare the error matrix here to the unsampled set, definitely improvement in the last two classes</span>
 <span class="c"># Classes:</span>
 <span class="c"># 0 - Ellipticals</span>
 <span class="c"># 1 - Spirals (face-on)</span>
