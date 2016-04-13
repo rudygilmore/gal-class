@@ -52,8 +52,10 @@
 .highlight .err { border: 1px solid #FF0000 } /* Error */
 .highlight .k { color: #008000; font-weight: bold } /* Keyword */
 .highlight .o { color: #666666 } /* Operator */
+.highlight .ch { color: #408080; font-style: italic } /* Comment.Hashbang */
 .highlight .cm { color: #408080; font-style: italic } /* Comment.Multiline */
 .highlight .cp { color: #BC7A00 } /* Comment.Preproc */
+.highlight .cpf { color: #408080; font-style: italic } /* Comment.PreprocFile */
 .highlight .c1 { color: #408080; font-style: italic } /* Comment.Single */
 .highlight .cs { color: #408080; font-style: italic } /* Comment.Special */
 .highlight .gd { color: #A00000 } /* Generic.Deleted */
@@ -174,7 +176,7 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[40]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">sklearn</span> 
@@ -182,14 +184,14 @@ div#notebook {
 <span class="kn">import</span> <span class="nn">scipy.stats</span> <span class="kn">as</span> <span class="nn">sps</span>
 <span class="o">%</span><span class="k">matplotlib</span> inline
 <span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pylab</span>
-<span class="n">pylab</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s">&#39;figure.figsize&#39;</span><span class="p">]</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">pylab</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;figure.figsize&#39;</span><span class="p">]</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">12</span><span class="p">)</span>
 
 <span class="k">def</span> <span class="nf">shuffler</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Read into dataframe and shuffle</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="c"># return the pandas dataframe</span>
+    <span class="c1"># return the pandas dataframe</span>
     <span class="k">return</span> <span class="n">df</span><span class="o">.</span><span class="n">reindex</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">permutation</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">))</span>
 </pre></div>
 
@@ -203,7 +205,7 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[43]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="n">phot_df_raw</span> <span class="o">=</span> <span class="n">shuffler</span><span class="p">(</span><span class="s">&#39;phot_ext_rgilmore.csv&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">phot_df_raw</span> <span class="o">=</span> <span class="n">shuffler</span><span class="p">(</span><span class="s1">&#39;phot_ext_rgilmore.csv&#39;</span><span class="p">)</span>  <span class="c1"># main data file retrieved from SkyServer</span>
 <span class="n">phot_df_raw</span><span class="o">.</span><span class="n">shape</span>
 </pre></div>
 
@@ -242,27 +244,27 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[44]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="c"># Apply some cuts on the data</span>
-<span class="c">#Nonphysical model outputs</span>
-<span class="n">phot_df</span> <span class="o">=</span> <span class="n">phot_df_raw</span><span class="p">[</span><span class="n">phot_df_raw</span><span class="p">[</span><span class="s">&#39;deVRad_r&#39;</span><span class="p">]</span><span class="o">&gt;=</span><span class="mf">0.0</span><span class="p">]</span>
-<span class="n">phot_df</span> <span class="o">=</span> <span class="n">phot_df</span><span class="p">[</span><span class="n">phot_df</span><span class="p">[</span><span class="s">&#39;expRad_g&#39;</span><span class="p">]</span><span class="o">&gt;=</span><span class="mf">0.0</span><span class="p">]</span>
-<span class="n">phot_df</span> <span class="o">=</span> <span class="n">phot_df</span><span class="p">[</span><span class="n">phot_df</span><span class="p">[</span><span class="s">&#39;expAB_g&#39;</span><span class="p">]</span><span class="o">&gt;=</span><span class="mf">0.</span><span class="p">]</span>
-<span class="n">phot_df</span> <span class="o">=</span> <span class="n">phot_df</span><span class="p">[</span><span class="n">phot_df</span><span class="p">[</span><span class="s">&#39;deVAB_z&#39;</span><span class="p">]</span><span class="o">&gt;=</span><span class="mf">0.</span><span class="p">]</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Apply some cuts on the data</span>
+<span class="c1">#Nonphysical model outputs</span>
+<span class="n">phot_df</span> <span class="o">=</span> <span class="n">phot_df_raw</span><span class="p">[</span><span class="n">phot_df_raw</span><span class="p">[</span><span class="s1">&#39;deVRad_r&#39;</span><span class="p">]</span><span class="o">&gt;=</span><span class="mf">0.0</span><span class="p">]</span>
+<span class="n">phot_df</span> <span class="o">=</span> <span class="n">phot_df</span><span class="p">[</span><span class="n">phot_df</span><span class="p">[</span><span class="s1">&#39;expRad_g&#39;</span><span class="p">]</span><span class="o">&gt;=</span><span class="mf">0.0</span><span class="p">]</span>
+<span class="n">phot_df</span> <span class="o">=</span> <span class="n">phot_df</span><span class="p">[</span><span class="n">phot_df</span><span class="p">[</span><span class="s1">&#39;expAB_g&#39;</span><span class="p">]</span><span class="o">&gt;=</span><span class="mf">0.</span><span class="p">]</span>
+<span class="n">phot_df</span> <span class="o">=</span> <span class="n">phot_df</span><span class="p">[</span><span class="n">phot_df</span><span class="p">[</span><span class="s1">&#39;deVAB_z&#39;</span><span class="p">]</span><span class="o">&gt;=</span><span class="mf">0.</span><span class="p">]</span>
 
 
-<span class="c"># Redshift limits</span>
+<span class="c1"># Redshift limits</span>
 <span class="n">phot_df</span> <span class="o">=</span> <span class="n">phot_df</span><span class="p">[(</span><span class="n">phot_df</span><span class="o">.</span><span class="n">z</span><span class="o">&lt;</span><span class="mf">0.5</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">phot_df</span><span class="o">.</span><span class="n">z</span><span class="o">&gt;</span><span class="mf">0.0</span><span class="p">)]</span> 
 
 
 
-<span class="c"># Remove high extinction cases</span>
+<span class="c1"># Remove high extinction cases</span>
 <span class="n">phot_df</span> <span class="o">=</span> <span class="n">phot_df</span><span class="p">[</span><span class="n">phot_df</span><span class="o">.</span><span class="n">extinction_u</span><span class="o">&lt;=</span><span class="mf">0.5</span><span class="p">]</span>
 
-<span class="c"># Nonphysical flux params within models</span>
+<span class="c1"># Nonphysical flux params within models</span>
 <span class="n">phot_df</span> <span class="o">=</span> <span class="n">phot_df</span><span class="p">[(</span><span class="n">phot_df</span><span class="o">.</span><span class="n">aperFlux7_g</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">)</span>\
                   <span class="o">&amp;</span><span class="p">(</span><span class="n">phot_df</span><span class="o">.</span><span class="n">cModelFlux_g</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">)</span>\
                   <span class="o">&amp;</span><span class="p">(</span><span class="n">phot_df</span><span class="o">.</span><span class="n">expFlux_u</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">)</span>\
-                  <span class="o">&amp;</span><span class="p">(</span><span class="n">phot_df</span><span class="o">.</span><span class="n">modelFlux_u</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">)]</span> <span class="c">#check that no negative linear flux params appear</span>
+                  <span class="o">&amp;</span><span class="p">(</span><span class="n">phot_df</span><span class="o">.</span><span class="n">modelFlux_u</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">)]</span> <span class="c1">#check that no negative linear flux params appear</span>
 <span class="n">phot_df</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 <span class="n">phot_df</span><span class="o">.</span><span class="n">shape</span>
 </pre></div>
@@ -293,15 +295,15 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[45]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="c"># Extinction corrections to flux</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Extinction corrections to flux</span>
 
-<span class="n">flux_col_lst</span> <span class="o">=</span> <span class="p">[</span><span class="n">col_name</span> <span class="k">for</span> <span class="n">col_name</span> <span class="ow">in</span> <span class="n">phot_df</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="s">&#39;Flux&#39;</span> <span class="ow">in</span> <span class="n">col_name</span><span class="p">]</span>
-<span class="c">#print flux_col_list</span>
-<span class="c">#print phot_df[flux_col_list][0:10]</span>
+<span class="n">flux_col_lst</span> <span class="o">=</span> <span class="p">[</span><span class="n">col_name</span> <span class="k">for</span> <span class="n">col_name</span> <span class="ow">in</span> <span class="n">phot_df</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="s1">&#39;Flux&#39;</span> <span class="ow">in</span> <span class="n">col_name</span><span class="p">]</span>
+<span class="c1">#print flux_col_list</span>
+<span class="c1">#print phot_df[flux_col_list][0:10]</span>
              
 <span class="k">for</span> <span class="n">flux_col</span> <span class="ow">in</span> <span class="n">flux_col_lst</span><span class="p">:</span>
     <span class="n">band</span> <span class="o">=</span> <span class="n">flux_col</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-    <span class="n">phot_df</span><span class="p">[</span><span class="n">flux_col</span><span class="o">+</span><span class="s">&#39;_ext_cor&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">phot_df</span><span class="p">[</span><span class="n">flux_col</span><span class="p">]</span><span class="o">*</span><span class="mf">2.5</span><span class="o">**</span><span class="n">phot_df</span><span class="p">[</span><span class="s">&#39;extinction_&#39;</span><span class="o">+</span><span class="n">band</span><span class="p">]</span>
+    <span class="n">phot_df</span><span class="p">[</span><span class="n">flux_col</span><span class="o">+</span><span class="s1">&#39;_ext_cor&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">phot_df</span><span class="p">[</span><span class="n">flux_col</span><span class="p">]</span><span class="o">*</span><span class="mf">2.5</span><span class="o">**</span><span class="n">phot_df</span><span class="p">[</span><span class="s1">&#39;extinction_&#39;</span><span class="o">+</span><span class="n">band</span><span class="p">]</span>
 </pre></div>
 
 </div>
@@ -314,7 +316,7 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[46]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="n">phot_df</span><span class="p">[[</span><span class="s">&#39;psfFlux_u&#39;</span><span class="p">,</span><span class="s">&#39;psfFlux_u_ext_cor&#39;</span><span class="p">,</span><span class="s">&#39;extinction_u&#39;</span><span class="p">]][</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">phot_df</span><span class="p">[[</span><span class="s1">&#39;psfFlux_u&#39;</span><span class="p">,</span><span class="s1">&#39;psfFlux_u_ext_cor&#39;</span><span class="p">,</span><span class="s1">&#39;extinction_u&#39;</span><span class="p">]][</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
 </pre></div>
 
 </div>
@@ -373,14 +375,14 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[47]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="c"># Extinction corrections to magnitude measurements</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Extinction corrections to magnitude measurements</span>
 
-<span class="n">mag_col_lst</span> <span class="o">=</span> <span class="p">[</span><span class="n">col_name</span> <span class="k">for</span> <span class="n">col_name</span> <span class="ow">in</span> <span class="n">phot_df</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="s">&#39;Mag&#39;</span> <span class="ow">in</span> <span class="n">col_name</span> <span class="ow">and</span> <span class="s">&#39;Err&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">col_name</span><span class="p">]</span>
+<span class="n">mag_col_lst</span> <span class="o">=</span> <span class="p">[</span><span class="n">col_name</span> <span class="k">for</span> <span class="n">col_name</span> <span class="ow">in</span> <span class="n">phot_df</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="s1">&#39;Mag&#39;</span> <span class="ow">in</span> <span class="n">col_name</span> <span class="ow">and</span> <span class="s1">&#39;Err&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">col_name</span><span class="p">]</span>
 
              
 <span class="k">for</span> <span class="n">mag_col</span> <span class="ow">in</span> <span class="n">mag_col_lst</span><span class="p">:</span>
     <span class="n">band</span> <span class="o">=</span> <span class="n">mag_col</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-    <span class="n">phot_df</span><span class="p">[</span><span class="n">mag_col</span><span class="o">+</span><span class="s">&#39;_ext_cor&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">phot_df</span><span class="p">[</span><span class="n">mag_col</span><span class="p">]</span><span class="o">-</span><span class="n">phot_df</span><span class="p">[</span><span class="s">&#39;extinction_&#39;</span><span class="o">+</span><span class="n">band</span><span class="p">]</span>
+    <span class="n">phot_df</span><span class="p">[</span><span class="n">mag_col</span><span class="o">+</span><span class="s1">&#39;_ext_cor&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">phot_df</span><span class="p">[</span><span class="n">mag_col</span><span class="p">]</span><span class="o">-</span><span class="n">phot_df</span><span class="p">[</span><span class="s1">&#39;extinction_&#39;</span><span class="o">+</span><span class="n">band</span><span class="p">]</span>
     
 </pre></div>
 
@@ -394,7 +396,7 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[48]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="n">phot_df</span><span class="p">[[</span><span class="s">&#39;deVMag_u&#39;</span><span class="p">,</span><span class="s">&#39;deVMag_u_ext_cor&#39;</span><span class="p">,</span><span class="s">&#39;extinction_u&#39;</span><span class="p">]][</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">phot_df</span><span class="p">[[</span><span class="s1">&#39;deVMag_u&#39;</span><span class="p">,</span><span class="s1">&#39;deVMag_u_ext_cor&#39;</span><span class="p">,</span><span class="s1">&#39;extinction_u&#39;</span><span class="p">]][</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
 </pre></div>
 
 </div>
@@ -453,7 +455,7 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[49]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="c"># remove unextincted columns</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># remove unextincted columns</span>
 <span class="k">print</span> <span class="nb">len</span><span class="p">(</span><span class="n">phot_df</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">flux_col</span> <span class="ow">in</span> <span class="n">flux_col_lst</span><span class="p">:</span>
     <span class="n">phot_df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">flux_col</span><span class="p">,</span><span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
@@ -488,7 +490,7 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[50]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="c">#redshift (distance) distro of galaxy targets</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1">#redshift (distance) distro of galaxy targets</span>
 <span class="n">xx</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">phot_df</span><span class="o">.</span><span class="n">z</span><span class="p">,</span><span class="mi">200</span><span class="p">)</span>
 </pre></div>
 
@@ -720,7 +722,7 @@ rkJggg==
 <div class="prompt input_prompt">In&nbsp;[51]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="c">#xx=plt.hist(phot_df.petroMag_r,100)</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1">#xx=plt.hist(phot_df.petroMag_r,100)</span>
 <span class="n">xx</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">phot_df</span><span class="o">.</span><span class="n">psfMag_r_ext_cor</span><span class="p">,</span><span class="n">phot_df</span><span class="o">.</span><span class="n">z</span><span class="p">)</span>
 </pre></div>
 
@@ -2484,7 +2486,7 @@ ClA4E0IIIYQQUoH/D7OCiRwAgfQzAAAAAElFTkSuQmCC
 <div class="prompt input_prompt">In&nbsp;[52]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="c">#radius fit distro</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1">#radius fit distro</span>
 <span class="n">xx</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">phot_df</span><span class="o">.</span><span class="n">deVRad_g</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
 </pre></div>
 
@@ -2688,8 +2690,14 @@ BgCAIfEMAABD4hkAAIbEMwAADP3/NqJ/AkJK/NMAAAAASUVORK5CYII=
 <div class="prompt input_prompt">In&nbsp;[53]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="c"># Our target variables </span>
-<span class="n">phot_df</span><span class="p">[[</span><span class="s">&#39;deVRad_r&#39;</span><span class="p">,</span><span class="s">&#39;p_el&#39;</span><span class="p">,</span> <span class="s">&#39;p_cw&#39;</span><span class="p">,</span> <span class="s">&#39;p_acw&#39;</span><span class="p">,</span> <span class="s">&#39;p_edge&#39;</span><span class="p">,</span> <span class="s">&#39;p_dk&#39;</span><span class="p">,</span> <span class="s">&#39;p_mg&#39;</span><span class="p">,</span> <span class="s">&#39;p_cs&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Our target variables - fraction of votes for various galaxy classifications</span>
+<span class="c1"># p_el: elliptical</span>
+<span class="c1"># p_cw: clockwise spiral</span>
+<span class="c1"># p_acw: counter-clockwise spiral</span>
+<span class="c1"># p_dk: unknown</span>
+<span class="c1"># p_mg: merger</span>
+<span class="c1"># p_edge: edge-on spiral </span>
+<span class="n">phot_df</span><span class="p">[[</span><span class="s1">&#39;deVRad_r&#39;</span><span class="p">,</span><span class="s1">&#39;p_el&#39;</span><span class="p">,</span> <span class="s1">&#39;p_cw&#39;</span><span class="p">,</span> <span class="s1">&#39;p_acw&#39;</span><span class="p">,</span> <span class="s1">&#39;p_edge&#39;</span><span class="p">,</span> <span class="s1">&#39;p_dk&#39;</span><span class="p">,</span> <span class="s1">&#39;p_mg&#39;</span><span class="p">,</span> <span class="s1">&#39;p_cs&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
 </div>
@@ -2790,7 +2798,7 @@ BgCAIfEMAABD4hkAAIbEMwAADP3/NqJ/AkJK/NMAAAAASUVORK5CYII=
 <div class="prompt input_prompt">In&nbsp;[54]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="n">x</span><span class="p">,</span><span class="n">y</span> <span class="o">=</span> <span class="n">phot_df</span><span class="p">[</span><span class="s">&#39;deVRad_g&#39;</span><span class="p">],</span><span class="n">phot_df</span><span class="p">[</span><span class="s">&#39;deVAB_i&#39;</span><span class="p">]</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">x</span><span class="p">,</span><span class="n">y</span> <span class="o">=</span> <span class="n">phot_df</span><span class="p">[</span><span class="s1">&#39;deVRad_g&#39;</span><span class="p">],</span><span class="n">phot_df</span><span class="p">[</span><span class="s1">&#39;deVAB_i&#39;</span><span class="p">]</span>
 <span class="k">print</span> <span class="n">sps</span><span class="o">.</span><span class="n">pearsonr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
 </pre></div>
@@ -5744,16 +5752,20 @@ TkSuQmCC
 <div class="prompt input_prompt">In&nbsp;[55]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="c"># For the first modeling attempt, let&#39;s identify a subset of parameters which are highly correlated with the target</span>
-<span class="c"># variables</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># For the first modeling attempt, let&#39;s identify a subset of parameters which are highly </span>
+<span class="c1"># correlated with the target variables, and take the top N as the starting set</span>
+
+<span class="c1"># Based on experimentation, I find that this method reaches peak accuracy at around N=50 features</span>
+<span class="c1"># For higher N, accuracy decreases slightly, likely due to overfitting</span>
+
 <span class="n">res</span><span class="o">=</span><span class="p">[]</span>
 <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">phot_df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
-    <span class="k">if</span> <span class="s">&#39;p_&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">col</span><span class="p">:</span> <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">col</span><span class="p">]</span><span class="o">+</span><span class="nb">list</span><span class="p">(</span><span class="n">sps</span><span class="o">.</span><span class="n">pearsonr</span><span class="p">(</span><span class="n">phot_df</span><span class="o">.</span><span class="n">p_cs</span><span class="p">,</span><span class="n">phot_df</span><span class="p">[</span><span class="n">col</span><span class="p">])))</span> <span class="c">#all independent vars</span>
+    <span class="k">if</span> <span class="s1">&#39;p_&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">col</span><span class="p">:</span> <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">col</span><span class="p">]</span><span class="o">+</span><span class="nb">list</span><span class="p">(</span><span class="n">sps</span><span class="o">.</span><span class="n">pearsonr</span><span class="p">(</span><span class="n">phot_df</span><span class="o">.</span><span class="n">p_cs</span><span class="p">,</span><span class="n">phot_df</span><span class="p">[</span><span class="n">col</span><span class="p">])))</span> <span class="c1">#all independent vars</span>
 
 <span class="n">out</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">res</span><span class="p">,</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">absolute</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span><span class="n">reverse</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">out</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">50</span><span class="p">]:</span>
-    <span class="k">print</span> <span class="n">item</span>  <span class="c">#variables sorted by declining correlation</span>
-    <span class="c">#if &#39;p_&#39; not in item[0]: print item</span>
+    <span class="k">print</span> <span class="n">item</span>  <span class="c1">#variables sorted by declining correlation</span>
+    <span class="c1">#if &#39;p_&#39; not in item[0]: print item</span>
 </pre></div>
 
 </div>
@@ -5829,21 +5841,24 @@ TkSuQmCC
 <div class="prompt input_prompt">In&nbsp;[56]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="c"># First attempt at a 2-category classifier: can we distinguish elliptical from non-ellipticals?</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># First attempt at a 2-category classifier: can we distinguish elliptical from non-ellipticals?</span>
 
-<span class="n">input_set</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">out</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">50</span><span class="p">]</span> <span class="k">if</span> <span class="s">&#39;p_&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+<span class="c1"># Elliptical galaxies compose roughly half of the training set, so I am not worrying about </span>
+<span class="c1"># rebalancing at the moment</span>
+
+<span class="n">input_set</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">out</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">50</span><span class="p">]</span> <span class="k">if</span> <span class="s1">&#39;p_&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
 <span class="n">test_size</span> <span class="o">=</span> <span class="mi">10000</span>
 
 <span class="n">lm</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">()</span>
 <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">phot_df</span><span class="p">[</span><span class="n">input_set</span><span class="p">][</span><span class="n">test_size</span><span class="p">:])</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">phot_df</span><span class="p">[</span><span class="s">&#39;p_el&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="o">&gt;</span><span class="mf">0.8</span><span class="p">)))[</span><span class="n">test_size</span><span class="p">:]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">phot_df</span><span class="p">[</span><span class="s1">&#39;p_el&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="o">&gt;</span><span class="mf">0.8</span><span class="p">)))[</span><span class="n">test_size</span><span class="p">:]</span>
 <span class="n">X_pred</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">phot_df</span><span class="p">[</span><span class="n">input_set</span><span class="p">][:</span><span class="n">test_size</span><span class="p">])</span>
-<span class="n">y_pred</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">phot_df</span><span class="p">[</span><span class="s">&#39;p_el&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="o">&gt;</span><span class="mf">0.8</span><span class="p">)))[:</span><span class="n">test_size</span><span class="p">]</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">phot_df</span><span class="p">[</span><span class="s1">&#39;p_el&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="o">&gt;</span><span class="mf">0.8</span><span class="p">)))[:</span><span class="n">test_size</span><span class="p">]</span>
 <span class="n">lm</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
 <span class="n">res_df</span> <span class="o">=</span> <span class="n">phot_df</span><span class="p">[</span><span class="n">input_set</span><span class="p">][</span><span class="mi">0</span><span class="p">:</span><span class="n">test_size</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> 
-<span class="n">res_df</span><span class="p">[</span><span class="s">&#39;actual&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">y_pred</span><span class="p">)</span>
-<span class="n">res_df</span><span class="p">[</span><span class="s">&#39;pred&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">lm</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">phot_df</span><span class="p">[</span><span class="n">input_set</span><span class="p">][</span><span class="mi">0</span><span class="p">:</span><span class="n">test_size</span><span class="p">]))</span>
-<span class="n">res_df</span><span class="p">[</span><span class="s">&#39;cor&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">res_df</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">row</span><span class="p">:</span><span class="nb">int</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s">&#39;actual&#39;</span><span class="p">]</span><span class="o">==</span><span class="n">row</span><span class="p">[</span><span class="s">&#39;pred&#39;</span><span class="p">]),</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">res_df</span><span class="p">[</span><span class="s1">&#39;actual&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">y_pred</span><span class="p">)</span>
+<span class="n">res_df</span><span class="p">[</span><span class="s1">&#39;pred&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">lm</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">phot_df</span><span class="p">[</span><span class="n">input_set</span><span class="p">][</span><span class="mi">0</span><span class="p">:</span><span class="n">test_size</span><span class="p">]))</span>
+<span class="n">res_df</span><span class="p">[</span><span class="s1">&#39;cor&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">res_df</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">row</span><span class="p">:</span><span class="nb">int</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;actual&#39;</span><span class="p">]</span><span class="o">==</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;pred&#39;</span><span class="p">]),</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -5856,9 +5871,9 @@ TkSuQmCC
 <div class="prompt input_prompt">In&nbsp;[57]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="c"># Results here are encouraging, nearly 90% of the 10000-case sample classified correctly</span>
-<span class="k">print</span> <span class="nb">sum</span><span class="p">(</span><span class="n">res_df</span><span class="p">[</span><span class="s">&#39;actual&#39;</span><span class="p">]),</span><span class="nb">sum</span><span class="p">(</span><span class="n">res_df</span><span class="p">[</span><span class="s">&#39;pred&#39;</span><span class="p">]),</span><span class="nb">sum</span><span class="p">(</span><span class="n">res_df</span><span class="p">[</span><span class="s">&#39;cor&#39;</span><span class="p">])</span>
-<span class="k">print</span> <span class="s">&#39;Overall correct fraction = &#39;</span><span class="p">,</span><span class="nb">sum</span><span class="p">(</span><span class="n">res_df</span><span class="p">[</span><span class="s">&#39;cor&#39;</span><span class="p">])</span><span class="o">/</span><span class="nb">float</span><span class="p">(</span><span class="n">test_size</span><span class="p">)</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Results here are encouraging, nearly 90% of the 10000-case sample classified correctly</span>
+<span class="k">print</span> <span class="nb">sum</span><span class="p">(</span><span class="n">res_df</span><span class="p">[</span><span class="s1">&#39;actual&#39;</span><span class="p">]),</span><span class="nb">sum</span><span class="p">(</span><span class="n">res_df</span><span class="p">[</span><span class="s1">&#39;pred&#39;</span><span class="p">]),</span><span class="nb">sum</span><span class="p">(</span><span class="n">res_df</span><span class="p">[</span><span class="s1">&#39;cor&#39;</span><span class="p">])</span>
+<span class="k">print</span> <span class="s1">&#39;Overall correct fraction = &#39;</span><span class="p">,</span><span class="nb">sum</span><span class="p">(</span><span class="n">res_df</span><span class="p">[</span><span class="s1">&#39;cor&#39;</span><span class="p">])</span><span class="o">/</span><span class="nb">float</span><span class="p">(</span><span class="n">test_size</span><span class="p">)</span>
 <span class="n">res_df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
@@ -6047,12 +6062,18 @@ Overall correct fraction =  0.8852
 <div class="prompt input_prompt">In&nbsp;[58]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="c"># We can code up a summary confusion matrix to look at counts across predicted and actual categories</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># We can code up a summary confusion matrix to look at counts across predicted and </span>
+<span class="c1"># actual categories</span>
+
 <span class="n">imax</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">res_df</span><span class="o">.</span><span class="n">actual</span><span class="p">)</span>
 <span class="n">rep</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">imax</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">imax</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span><span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">res_df</span><span class="p">)):</span>
     <span class="n">rep</span><span class="p">[</span><span class="n">res_df</span><span class="o">.</span><span class="n">actual</span><span class="p">[</span><span class="n">i</span><span class="p">]][</span><span class="n">res_df</span><span class="o">.</span><span class="n">pred</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span><span class="o">+=</span><span class="mi">1</span>
-<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">rep</span><span class="p">)</span> <span class="c">#rows are actual class, columns are predicted</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">rep</span><span class="p">)</span> 
+
+<span class="c1"># rows are actual class, columns are predicted</span>
+<span class="c1"># 0 = non-elliptical</span>
+<span class="c1"># 1 = elliptical</span>
 </pre></div>
 
 </div>
@@ -6111,45 +6132,49 @@ Overall correct fraction =  0.8852
 <div class="prompt input_prompt">In&nbsp;[59]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="c"># Now, let&#39;s attempt to distinguish elliptical, face on- and edge on-spirals, and mergers in a single model, using </span>
-<span class="c"># the softmax regression feature in sklearn&#39;s Logistic Regression package.  Our target variables will now be</span>
-<span class="c"># integer representations of the possible classes:</span>
-<span class="c"># </span>
-<span class="c"># 0 - Ellipticals</span>
-<span class="c"># 1 - Spirals (face-on)</span>
-<span class="c"># 2 - Spirals (edge-on)</span>
-<span class="c"># 3 - Mergers</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Our attempt at binary classification looks encouraging.</span>
 
+<span class="c1"># Now, let&#39;s attempt to distinguish elliptical, face on- and edge on-spirals, and mergers in a  </span>
+<span class="c1"># single model, using the softmax regression feature in sklearn&#39;s Logistic Regression package.  </span>
+<span class="c1"># Our target variables will now be an integer representations of the possible classes:</span>
+<span class="c1"># </span>
+<span class="c1"># 0 - Ellipticals</span>
+<span class="c1"># 1 - Spirals (face-on)</span>
+<span class="c1"># 2 - Spirals (edge-on)</span>
+<span class="c1"># 3 - Mergers</span>
 
-<span class="n">input_set</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">out</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">30</span><span class="p">]</span> <span class="k">if</span> <span class="s">&#39;p_&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">][:</span><span class="mi">2</span><span class="p">]]</span>
+<span class="c1"># We will use a majority of votes method to determine the training class for a galaxy, </span>
+<span class="c1"># discarding ambiguous cases</span>
+
+<span class="n">input_set</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">out</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">30</span><span class="p">]</span> <span class="k">if</span> <span class="s1">&#39;p_&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">][:</span><span class="mi">2</span><span class="p">]]</span>
 <span class="n">test_size</span> <span class="o">=</span> <span class="mi">10000</span>
 
-<span class="n">ycols</span> <span class="o">=</span> <span class="p">[</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">phot_df</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="s">&#39;p_&#39;</span> <span class="ow">in</span> <span class="n">col</span><span class="p">[:</span><span class="mi">2</span><span class="p">]]</span>
+<span class="n">ycols</span> <span class="o">=</span> <span class="p">[</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">phot_df</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="s1">&#39;p_&#39;</span> <span class="ow">in</span> <span class="n">col</span><span class="p">[:</span><span class="mi">2</span><span class="p">]]</span>
 <span class="k">def</span> <span class="nf">gal_class</span><span class="p">(</span><span class="n">row</span><span class="p">):</span>
-    <span class="n">gc_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;p_el&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="s">&#39;p_cw&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s">&#39;p_acw&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s">&#39;p_edge&#39;</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="s">&#39;p_dk&#39;</span><span class="p">:</span><span class="bp">None</span><span class="p">,</span> <span class="s">&#39;p_mg&#39;</span><span class="p">:</span><span class="mi">3</span><span class="p">}</span> <span class="c">#dictionary for our classification</span>
+    <span class="n">gc_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;p_el&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;p_cw&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;p_acw&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;p_edge&#39;</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;p_dk&#39;</span><span class="p">:</span><span class="bp">None</span><span class="p">,</span> <span class="s1">&#39;p_mg&#39;</span><span class="p">:</span><span class="mi">3</span><span class="p">}</span> <span class="c1">#dictionary for our classification</span>
     <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">gc_dict</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">row</span><span class="p">[</span><span class="n">item</span><span class="p">]</span><span class="o">&gt;</span><span class="mf">0.65</span><span class="p">:</span> <span class="k">return</span> <span class="n">gc_dict</span><span class="p">[</span><span class="n">item</span><span class="p">]</span> <span class="c"># We will set a bar of 65% for deciding vote on &quot;correct&quot; class</span>
+        <span class="k">if</span> <span class="n">row</span><span class="p">[</span><span class="n">item</span><span class="p">]</span><span class="o">&gt;</span><span class="mf">0.65</span><span class="p">:</span> <span class="k">return</span> <span class="n">gc_dict</span><span class="p">[</span><span class="n">item</span><span class="p">]</span> <span class="c1"># We will set a bar of 65% for deciding vote on &quot;correct&quot; class</span>
     <span class="k">return</span> <span class="bp">None</span>
 
-<span class="n">phot_df</span><span class="p">[</span><span class="s">&#39;gal_class&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">phot_df</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">gal_class</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">phot_df</span><span class="p">[</span><span class="s1">&#39;gal_class&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">phot_df</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">gal_class</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">mod_df</span> <span class="o">=</span> <span class="n">phot_df</span><span class="p">[</span><span class="n">phot_df</span><span class="o">.</span><span class="n">gal_class</span><span class="o">.</span><span class="n">notnull</span><span class="p">()]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
 <span class="k">print</span> <span class="nb">len</span><span class="p">(</span><span class="n">mod_df</span><span class="p">)</span>
-<span class="c">#print mod_df[ycols+[&#39;gal_class&#39;]]</span>
-<span class="n">lm</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">multi_class</span><span class="o">=</span><span class="s">&#39;multinomial&#39;</span><span class="p">,</span><span class="n">solver</span><span class="o">=</span><span class="s">&#39;lbfgs&#39;</span><span class="p">)</span>
+<span class="c1">#print mod_df[ycols+[&#39;gal_class&#39;]]</span>
+<span class="n">lm</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">multi_class</span><span class="o">=</span><span class="s1">&#39;multinomial&#39;</span><span class="p">,</span><span class="n">solver</span><span class="o">=</span><span class="s1">&#39;lbfgs&#39;</span><span class="p">)</span>
 <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">mod_df</span><span class="p">[</span><span class="n">input_set</span><span class="p">][</span><span class="n">test_size</span><span class="p">:])</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">mod_df</span><span class="p">[</span><span class="s">&#39;gal_class&#39;</span><span class="p">])[</span><span class="n">test_size</span><span class="p">:]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">mod_df</span><span class="p">[</span><span class="s1">&#39;gal_class&#39;</span><span class="p">])[</span><span class="n">test_size</span><span class="p">:]</span>
 <span class="n">X_pred</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">mod_df</span><span class="p">[</span><span class="n">input_set</span><span class="p">][:</span><span class="n">test_size</span><span class="p">])</span>
-<span class="n">y_pred</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">mod_df</span><span class="p">[</span><span class="s">&#39;gal_class&#39;</span><span class="p">])[:</span><span class="n">test_size</span><span class="p">]</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">mod_df</span><span class="p">[</span><span class="s1">&#39;gal_class&#39;</span><span class="p">])[:</span><span class="n">test_size</span><span class="p">]</span>
 
 
 <span class="n">lm</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
 <span class="n">res_df</span> <span class="o">=</span> <span class="n">mod_df</span><span class="p">[</span><span class="n">input_set</span><span class="p">][</span><span class="mi">0</span><span class="p">:</span><span class="n">test_size</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
 
-<span class="n">res_df</span><span class="p">[</span><span class="s">&#39;actual&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">y_pred</span><span class="p">)</span>
-<span class="n">res_df</span><span class="p">[</span><span class="s">&#39;pred&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">lm</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">mod_df</span><span class="p">[</span><span class="n">input_set</span><span class="p">][</span><span class="mi">0</span><span class="p">:</span><span class="n">test_size</span><span class="p">]))</span>
-<span class="n">res_df</span><span class="p">[</span><span class="s">&#39;cor&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">res_df</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">row</span><span class="p">:</span><span class="nb">int</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s">&#39;actual&#39;</span><span class="p">]</span><span class="o">==</span><span class="n">row</span><span class="p">[</span><span class="s">&#39;pred&#39;</span><span class="p">]),</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="k">print</span> <span class="nb">sum</span><span class="p">(</span><span class="n">res_df</span><span class="p">[</span><span class="s">&#39;actual&#39;</span><span class="p">]),</span><span class="nb">sum</span><span class="p">(</span><span class="n">res_df</span><span class="p">[</span><span class="s">&#39;pred&#39;</span><span class="p">]),</span><span class="nb">sum</span><span class="p">(</span><span class="n">res_df</span><span class="p">[</span><span class="s">&#39;cor&#39;</span><span class="p">])</span>
-<span class="k">print</span> <span class="s">&#39;Overall correct fraction = &#39;</span><span class="p">,</span><span class="nb">sum</span><span class="p">(</span><span class="n">res_df</span><span class="p">[</span><span class="s">&#39;cor&#39;</span><span class="p">])</span><span class="o">/</span><span class="nb">float</span><span class="p">(</span><span class="n">test_size</span><span class="p">)</span>
+<span class="n">res_df</span><span class="p">[</span><span class="s1">&#39;actual&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">y_pred</span><span class="p">)</span>
+<span class="n">res_df</span><span class="p">[</span><span class="s1">&#39;pred&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">lm</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">mod_df</span><span class="p">[</span><span class="n">input_set</span><span class="p">][</span><span class="mi">0</span><span class="p">:</span><span class="n">test_size</span><span class="p">]))</span>
+<span class="n">res_df</span><span class="p">[</span><span class="s1">&#39;cor&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">res_df</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">row</span><span class="p">:</span><span class="nb">int</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;actual&#39;</span><span class="p">]</span><span class="o">==</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;pred&#39;</span><span class="p">]),</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">print</span> <span class="nb">sum</span><span class="p">(</span><span class="n">res_df</span><span class="p">[</span><span class="s1">&#39;actual&#39;</span><span class="p">]),</span><span class="nb">sum</span><span class="p">(</span><span class="n">res_df</span><span class="p">[</span><span class="s1">&#39;pred&#39;</span><span class="p">]),</span><span class="nb">sum</span><span class="p">(</span><span class="n">res_df</span><span class="p">[</span><span class="s1">&#39;cor&#39;</span><span class="p">])</span>
+<span class="k">print</span> <span class="s1">&#39;Overall correct fraction = &#39;</span><span class="p">,</span><span class="nb">sum</span><span class="p">(</span><span class="n">res_df</span><span class="p">[</span><span class="s1">&#39;cor&#39;</span><span class="p">])</span><span class="o">/</span><span class="nb">float</span><span class="p">(</span><span class="n">test_size</span><span class="p">)</span>
 <span class="n">res_df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
@@ -6339,13 +6364,15 @@ Overall correct fraction =  0.89
 <div class="prompt input_prompt">In&nbsp;[60]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="c"># Our success rate in the first-try multinomial model above is fairly high overall.  However, our classes are not balanced</span>
-<span class="c"># (most galaxies are elliptical).  And we are not correctly identifying any of the small number of mergers that appear</span>
-<span class="c"># (class = 3)</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Our success rate in the first-try multinomial model above is fairly high overall.  </span>
+<span class="c1"># However, our classes are not balanced (most galaxies in sample are elliptical).</span>
+<span class="c1"># And we are not correctly identifying any of the small number of merger cases that appear</span>
+<span class="c1"># (class = 3)</span>
+
 <span class="k">print</span> <span class="nb">len</span><span class="p">(</span><span class="n">res_df</span><span class="p">)</span>
-<span class="k">print</span> <span class="s">&#39;Class count in test set:&#39;</span>
+<span class="k">print</span> <span class="s1">&#39;Class count in test set:&#39;</span>
 <span class="k">print</span> <span class="n">res_df</span><span class="o">.</span><span class="n">actual</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
-<span class="n">res_df</span><span class="p">[</span><span class="n">res_df</span><span class="p">[</span><span class="s">&#39;actual&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">3</span><span class="p">]</span>
+<span class="n">res_df</span><span class="p">[</span><span class="n">res_df</span><span class="p">[</span><span class="s1">&#39;actual&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">3</span><span class="p">]</span>
 </pre></div>
 
 </div>
@@ -7186,18 +7213,20 @@ Name: actual, dtype: int64
 <div class="prompt input_prompt">In&nbsp;[61]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="c"># As before, let&#39;s look at the confusion matrix to look at counts predicted vs actual</span>
-<span class="c"># Classes:</span>
-<span class="c"># 0 - Ellipticals</span>
-<span class="c"># 1 - Spirals (face-on)</span>
-<span class="c"># 2 - Spirals (edge-on)</span>
-<span class="c"># 3 - Mergers</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># As before, let&#39;s look at the confusion matrix to look at counts predicted vs actual</span>
+<span class="c1"># Classes:</span>
+<span class="c1"># 0 - Ellipticals</span>
+<span class="c1"># 1 - Spirals (face-on)</span>
+<span class="c1"># 2 - Spirals (edge-on)</span>
+<span class="c1"># 3 - Mergers</span>
 
 <span class="n">imax</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">res_df</span><span class="o">.</span><span class="n">actual</span><span class="p">))</span>
 <span class="n">rep</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">imax</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">imax</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span><span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">res_df</span><span class="p">)):</span>
     <span class="n">rep</span><span class="p">[</span><span class="n">res_df</span><span class="o">.</span><span class="n">actual</span><span class="p">[</span><span class="n">i</span><span class="p">]][</span><span class="n">res_df</span><span class="o">.</span><span class="n">pred</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span><span class="o">+=</span><span class="mi">1</span>
-<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">rep</span><span class="p">)</span> <span class="c"># rows are actual class, columns are predicted</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">rep</span><span class="p">)</span> 
+
+<span class="c1"># rows are actual class, columns are predicted</span>
 </pre></div>
 
 </div>
@@ -7269,6 +7298,23 @@ Name: actual, dtype: int64
 </div>
 
 </div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># It looks as though a substantial number of spiral galaxies (N=1 and 2) are being  </span>
+<span class="c1"># misclassified as elliptical, which is the more prevalent class.  </span>
+<span class="c1"># All mergers (N=3) are being misclassified.</span>
+
+<span class="c1"># Maybe we can use resampling to balance out the training cases before building the model...</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
@@ -7283,30 +7329,32 @@ Name: actual, dtype: int64
 <div class="prompt input_prompt">In&nbsp;[62]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="c"># Let&#39;s see if we can improve performance by using resampling to increase representation of less-common galaxy types</span>
-<span class="c"># in the training set</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Let&#39;s see if we can improve performance by using resampling to increase representation of </span>
+<span class="c1"># less-common galaxy types in the training set</span>
 
-<span class="c">#first, lets fix a shortcoming of the first multimode classifier, which was still using a feature list derived for </span>
-<span class="c"># the binary classifier; let&#39;s update to take the max of several correlations</span>
+<span class="c1"># first, lets fix a shortcoming of the first multimode classifier, which was still using a feature  </span>
+<span class="c1"># list derived for the binary classifier, and only looking at correlation with elliptical votes;</span>
+<span class="c1"># let&#39;s update to take the max of several correlations</span>
 
 <span class="n">res</span><span class="o">=</span><span class="p">[]</span>
 <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">phot_df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
-    <span class="k">if</span> <span class="s">&#39;p_&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">col</span><span class="p">:</span> <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">col</span><span class="p">]</span>\
+    <span class="k">if</span> <span class="s1">&#39;p_&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">col</span><span class="p">:</span> <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">col</span><span class="p">]</span>\
                                    <span class="o">+</span><span class="nb">list</span><span class="p">(</span><span class="n">sps</span><span class="o">.</span><span class="n">pearsonr</span><span class="p">(</span><span class="n">phot_df</span><span class="o">.</span><span class="n">p_cw</span><span class="p">,</span><span class="n">phot_df</span><span class="p">[</span><span class="n">col</span><span class="p">]))</span>\
                                    <span class="o">+</span><span class="nb">list</span><span class="p">(</span><span class="n">sps</span><span class="o">.</span><span class="n">pearsonr</span><span class="p">(</span><span class="n">phot_df</span><span class="o">.</span><span class="n">p_el</span><span class="p">,</span><span class="n">phot_df</span><span class="p">[</span><span class="n">col</span><span class="p">]))</span>\
-                                   <span class="o">+</span><span class="nb">list</span><span class="p">(</span><span class="n">sps</span><span class="o">.</span><span class="n">pearsonr</span><span class="p">(</span><span class="n">phot_df</span><span class="o">.</span><span class="n">p_mg</span><span class="p">,</span><span class="n">phot_df</span><span class="p">[</span><span class="n">col</span><span class="p">])))</span> <span class="c">#all independent vars</span>
+                                   <span class="o">+</span><span class="nb">list</span><span class="p">(</span><span class="n">sps</span><span class="o">.</span><span class="n">pearsonr</span><span class="p">(</span><span class="n">phot_df</span><span class="o">.</span><span class="n">p_mg</span><span class="p">,</span><span class="n">phot_df</span><span class="p">[</span><span class="n">col</span><span class="p">])))</span> <span class="c1">#all independent vars</span>
 
 <span class="n">out</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">res</span><span class="p">,</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="nb">max</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">absolute</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span><span class="n">np</span><span class="o">.</span><span class="n">absolute</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">3</span><span class="p">]),</span><span class="n">np</span><span class="o">.</span><span class="n">absolute</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">5</span><span class="p">])]),</span><span class="n">reverse</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">out</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">50</span><span class="p">]:</span>
-    <span class="k">print</span> <span class="n">item</span>  <span class="c">#variables sorted by declining correlation</span>
+    <span class="k">print</span> <span class="n">item</span>  <span class="c1">#variables sorted by declining correlation</span>
 
-<span class="n">input_set</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">out</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">50</span><span class="p">]</span> <span class="k">if</span> <span class="s">&#39;p_&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+<span class="n">input_set</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">out</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">50</span><span class="p">]</span> <span class="k">if</span> <span class="s1">&#39;p_&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
 <span class="n">mod_df</span> <span class="o">=</span> <span class="n">phot_df</span><span class="p">[</span><span class="n">phot_df</span><span class="o">.</span><span class="n">gal_class</span><span class="o">.</span><span class="n">notnull</span><span class="p">()]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
 
-<span class="c"># next, I&#39;ll manually select some weights to place on the different classes, then use panda&#39;s sample</span>
-<span class="c"># method to construct a new dataframe</span>
+<span class="c1"># next, I&#39;ll manually select some weights to place on the different classes, then use Panda&#39;s </span>
+<span class="c1"># sample method to construct a new dataframe</span>
+
 <span class="n">weights</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">:</span><span class="mi">6</span><span class="p">,</span><span class="mi">2</span><span class="p">:</span><span class="mi">8</span><span class="p">,</span><span class="mi">3</span><span class="p">:</span><span class="mi">200</span><span class="p">}</span>
-<span class="n">mod_df</span><span class="p">[</span><span class="s">&#39;rs_weights&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mod_df</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">row</span><span class="p">:</span><span class="n">weights</span><span class="p">[</span><span class="n">row</span><span class="p">[</span><span class="s">&#39;gal_class&#39;</span><span class="p">]],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">mod_df</span><span class="p">[</span><span class="s1">&#39;rs_weights&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mod_df</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">row</span><span class="p">:</span><span class="n">weights</span><span class="p">[</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;gal_class&#39;</span><span class="p">]],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">mod_rs_df</span> <span class="o">=</span> <span class="n">mod_df</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">50000</span><span class="p">,</span><span class="n">replace</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span><span class="n">weights</span><span class="o">=</span><span class="n">mod_df</span><span class="o">.</span><span class="n">rs_weights</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 </pre></div>
 
@@ -7383,28 +7431,28 @@ Name: actual, dtype: int64
 <div class="prompt input_prompt">In&nbsp;[63]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="c"># let&#39;s rerun the analysis after training on the resampled set</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># let&#39;s rerun the analysis after training on the resampled set</span>
 
-<span class="c">#input_set = [item[0] for item in out[0:30] if &#39;p_&#39; not in item[0][:2]]</span>
+<span class="c1">#input_set = [item[0] for item in out[0:30] if &#39;p_&#39; not in item[0][:2]]</span>
 <span class="n">test_size</span> <span class="o">=</span> <span class="mi">10000</span>
 
 <span class="k">print</span> <span class="nb">len</span><span class="p">(</span><span class="n">mod_rs_df</span><span class="p">)</span>
-<span class="c">#print mod_df[ycols+[&#39;gal_class&#39;]]</span>
-<span class="n">lm</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">multi_class</span><span class="o">=</span><span class="s">&#39;multinomial&#39;</span><span class="p">,</span><span class="n">solver</span><span class="o">=</span><span class="s">&#39;lbfgs&#39;</span><span class="p">)</span>
+<span class="c1">#print mod_df[ycols+[&#39;gal_class&#39;]]</span>
+<span class="n">lm</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">multi_class</span><span class="o">=</span><span class="s1">&#39;multinomial&#39;</span><span class="p">,</span><span class="n">solver</span><span class="o">=</span><span class="s1">&#39;lbfgs&#39;</span><span class="p">)</span>
 <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">mod_rs_df</span><span class="p">[</span><span class="n">input_set</span><span class="p">][</span><span class="n">test_size</span><span class="p">:])</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">mod_rs_df</span><span class="p">[</span><span class="s">&#39;gal_class&#39;</span><span class="p">])[</span><span class="n">test_size</span><span class="p">:]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">mod_rs_df</span><span class="p">[</span><span class="s1">&#39;gal_class&#39;</span><span class="p">])[</span><span class="n">test_size</span><span class="p">:]</span>
 <span class="n">X_pred</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">mod_df</span><span class="p">[</span><span class="n">input_set</span><span class="p">][:</span><span class="n">test_size</span><span class="p">])</span>
-<span class="n">y_pred</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">mod_df</span><span class="p">[</span><span class="s">&#39;gal_class&#39;</span><span class="p">])[:</span><span class="n">test_size</span><span class="p">]</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">mod_df</span><span class="p">[</span><span class="s1">&#39;gal_class&#39;</span><span class="p">])[:</span><span class="n">test_size</span><span class="p">]</span>
 
 
 <span class="n">lm</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
 <span class="n">res_df</span> <span class="o">=</span> <span class="n">mod_rs_df</span><span class="p">[</span><span class="n">input_set</span><span class="p">][</span><span class="mi">0</span><span class="p">:</span><span class="n">test_size</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
 
-<span class="n">res_df</span><span class="p">[</span><span class="s">&#39;actual&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">y_pred</span><span class="p">)</span>
-<span class="n">res_df</span><span class="p">[</span><span class="s">&#39;pred&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">lm</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">mod_df</span><span class="p">[</span><span class="n">input_set</span><span class="p">][</span><span class="mi">0</span><span class="p">:</span><span class="n">test_size</span><span class="p">]))</span>
-<span class="n">res_df</span><span class="p">[</span><span class="s">&#39;cor&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">res_df</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">row</span><span class="p">:</span><span class="nb">int</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s">&#39;actual&#39;</span><span class="p">]</span><span class="o">==</span><span class="n">row</span><span class="p">[</span><span class="s">&#39;pred&#39;</span><span class="p">]),</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="k">print</span> <span class="nb">sum</span><span class="p">(</span><span class="n">res_df</span><span class="p">[</span><span class="s">&#39;actual&#39;</span><span class="p">]),</span><span class="nb">sum</span><span class="p">(</span><span class="n">res_df</span><span class="p">[</span><span class="s">&#39;pred&#39;</span><span class="p">]),</span><span class="nb">sum</span><span class="p">(</span><span class="n">res_df</span><span class="p">[</span><span class="s">&#39;cor&#39;</span><span class="p">])</span>
-<span class="k">print</span> <span class="s">&#39;Overall correct fraction = &#39;</span><span class="p">,</span><span class="nb">sum</span><span class="p">(</span><span class="n">res_df</span><span class="p">[</span><span class="s">&#39;cor&#39;</span><span class="p">])</span><span class="o">/</span><span class="nb">float</span><span class="p">(</span><span class="n">test_size</span><span class="p">)</span>
+<span class="n">res_df</span><span class="p">[</span><span class="s1">&#39;actual&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">y_pred</span><span class="p">)</span>
+<span class="n">res_df</span><span class="p">[</span><span class="s1">&#39;pred&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">lm</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">mod_df</span><span class="p">[</span><span class="n">input_set</span><span class="p">][</span><span class="mi">0</span><span class="p">:</span><span class="n">test_size</span><span class="p">]))</span>
+<span class="n">res_df</span><span class="p">[</span><span class="s1">&#39;cor&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">res_df</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">row</span><span class="p">:</span><span class="nb">int</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;actual&#39;</span><span class="p">]</span><span class="o">==</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;pred&#39;</span><span class="p">]),</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">print</span> <span class="nb">sum</span><span class="p">(</span><span class="n">res_df</span><span class="p">[</span><span class="s1">&#39;actual&#39;</span><span class="p">]),</span><span class="nb">sum</span><span class="p">(</span><span class="n">res_df</span><span class="p">[</span><span class="s1">&#39;pred&#39;</span><span class="p">]),</span><span class="nb">sum</span><span class="p">(</span><span class="n">res_df</span><span class="p">[</span><span class="s1">&#39;cor&#39;</span><span class="p">])</span>
+<span class="k">print</span> <span class="s1">&#39;Overall correct fraction = &#39;</span><span class="p">,</span><span class="nb">sum</span><span class="p">(</span><span class="n">res_df</span><span class="p">[</span><span class="s1">&#39;cor&#39;</span><span class="p">])</span><span class="o">/</span><span class="nb">float</span><span class="p">(</span><span class="n">test_size</span><span class="p">)</span>
 <span class="n">res_df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
@@ -7594,11 +7642,11 @@ Overall correct fraction =  0.8042
 <div class="prompt input_prompt">In&nbsp;[64]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="c"># Unfortunately, our overall accuracy is down, though we are able to pick up many of the merger cases</span>
-<span class="c"># This may or may not be a worthwhile tradeoff, depending on what our overall goal is</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Unfortunately, overall accuracy is down, though we are able to pick up many of the merger cases</span>
+<span class="c1"># This may or may not be a worthwhile tradeoff, depending on what our overall goal is</span>
 <span class="k">print</span> <span class="nb">len</span><span class="p">(</span><span class="n">res_df</span><span class="p">)</span>
 <span class="k">print</span> <span class="n">res_df</span><span class="o">.</span><span class="n">actual</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
-<span class="n">res_df</span><span class="p">[</span><span class="n">res_df</span><span class="p">[</span><span class="s">&#39;actual&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">3</span><span class="p">]</span>
+<span class="n">res_df</span><span class="p">[</span><span class="n">res_df</span><span class="p">[</span><span class="s1">&#39;actual&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">3</span><span class="p">]</span>
 </pre></div>
 
 </div>
@@ -8438,18 +8486,20 @@ Name: actual, dtype: int64
 <div class="prompt input_prompt">In&nbsp;[65]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="c"># We can compare the error matrix here to the unsampled set, definitely improvement in the last two classes</span>
-<span class="c"># Classes:</span>
-<span class="c"># 0 - Ellipticals</span>
-<span class="c"># 1 - Spirals (face-on)</span>
-<span class="c"># 2 - Spirals (edge-on)</span>
-<span class="c"># 3 - Mergers</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># We can compare the error matrix here to the unsampled set, definitely improvement in the last two classes</span>
+<span class="c1"># Classes:</span>
+<span class="c1"># 0 - Ellipticals</span>
+<span class="c1"># 1 - Spirals (face-on)</span>
+<span class="c1"># 2 - Spirals (edge-on)</span>
+<span class="c1"># 3 - Mergers</span>
 
 <span class="n">imax</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">res_df</span><span class="o">.</span><span class="n">actual</span><span class="p">))</span>
 <span class="n">rep</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">imax</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">imax</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span><span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">res_df</span><span class="p">)):</span>
     <span class="n">rep</span><span class="p">[</span><span class="n">res_df</span><span class="o">.</span><span class="n">actual</span><span class="p">[</span><span class="n">i</span><span class="p">]][</span><span class="n">res_df</span><span class="o">.</span><span class="n">pred</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span><span class="o">+=</span><span class="mi">1</span>
-<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">rep</span><span class="p">)</span> <span class="c"># rows are actual class, columns are predicted</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">rep</span><span class="p">)</span> 
+
+<span class="c1"># rows are actual class, columns are predicted</span>
 </pre></div>
 
 </div>
@@ -8521,6 +8571,20 @@ Name: actual, dtype: int64
 </div>
 
 </div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># The resampled model is less accurate overall, </span>
+<span class="c1"># but it does correctly classify most of the merger cases in the test set. </span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
@@ -8535,49 +8599,55 @@ Name: actual, dtype: int64
 <div class="prompt input_prompt">In&nbsp;[66]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="c"># To avoid having to select features by hand, and avoid problems with collinearity and overfitting, it makes sense </span>
-<span class="c"># to run the feature set through a PCA transform, and just model based on a few variables</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># To avoid having to select features by hand, and avoid problems with collinearity and overfitting, </span>
+<span class="c1"># it makes sense to run the feature set through a PCA transform, and just model based on a few variables.  </span>
+
+<span class="c1"># Let&#39;s see if this improves performance over our previous method of selecting variables </span>
+<span class="c1"># based on correlation</span>
 
 <span class="kn">from</span> <span class="nn">sklearn.decomposition</span> <span class="kn">import</span> <span class="n">PCA</span>
 <span class="n">pca</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
 
 
-<span class="c">#rescale and center input params</span>
+<span class="c1">#rescale and center input params</span>
 <span class="n">mod_df_rescale</span> <span class="o">=</span> <span class="n">mod_df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">input_set</span><span class="p">:</span>
     <span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">mod_df</span><span class="p">[</span><span class="n">col</span><span class="p">])</span>
     <span class="n">m</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">mod_df</span><span class="p">[</span><span class="n">col</span><span class="p">])</span>
     <span class="n">mod_df_rescale</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">mod_df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:(</span><span class="n">x</span><span class="o">-</span><span class="n">m</span><span class="p">)</span><span class="o">/</span><span class="n">s</span><span class="p">)</span>
     
-<span class="c"># run PCA on a subset of our data - doing the full set gets expensive</span>
+<span class="c1"># run PCA on a subset of our data - doing the full set gets expensive</span>
 <span class="n">pca</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">mod_df_rescale</span><span class="p">[</span><span class="n">input_set</span><span class="p">][</span><span class="mi">0</span><span class="p">:</span><span class="mi">10000</span><span class="p">])</span>
 <span class="k">print</span><span class="p">(</span><span class="n">pca</span><span class="o">.</span><span class="n">explained_variance_ratio_</span><span class="p">)</span> 
-<span class="n">pca_df</span> <span class="o">=</span> <span class="n">pca</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">mod_df_rescale</span><span class="p">[</span><span class="n">input_set</span><span class="p">])</span> <span class="c">#apply transform to full set</span>
+<span class="n">pca_df</span> <span class="o">=</span> <span class="n">pca</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">mod_df_rescale</span><span class="p">[</span><span class="n">input_set</span><span class="p">])</span> <span class="c1">#apply transform to full set</span>
 <span class="k">print</span> <span class="n">pca_df</span><span class="o">.</span><span class="n">shape</span>
 
 
-<span class="c"># and rerun our logistic regression model, using the new PCA components as the training set</span>
+<span class="c1"># and rerun our logistic regression model, using the new PCA components as the training set</span>
 
 <span class="n">test_size</span> <span class="o">=</span> <span class="mi">10000</span>
 
 
-<span class="c">#print mod_df[ycols+[&#39;gal_class&#39;]]</span>
-<span class="n">lm</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">multi_class</span><span class="o">=</span><span class="s">&#39;multinomial&#39;</span><span class="p">,</span><span class="n">solver</span><span class="o">=</span><span class="s">&#39;lbfgs&#39;</span><span class="p">)</span>
+<span class="c1">#print mod_df[ycols+[&#39;gal_class&#39;]]</span>
+<span class="n">lm</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">multi_class</span><span class="o">=</span><span class="s1">&#39;multinomial&#39;</span><span class="p">,</span><span class="n">solver</span><span class="o">=</span><span class="s1">&#39;lbfgs&#39;</span><span class="p">)</span>
 <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">pca_df</span><span class="p">[</span><span class="n">test_size</span><span class="p">:])</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">mod_df</span><span class="p">[</span><span class="s">&#39;gal_class&#39;</span><span class="p">])[</span><span class="n">test_size</span><span class="p">:]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">mod_df</span><span class="p">[</span><span class="s1">&#39;gal_class&#39;</span><span class="p">])[</span><span class="n">test_size</span><span class="p">:]</span>
 <span class="n">X_pred</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">pca_df</span><span class="p">[:</span><span class="n">test_size</span><span class="p">])</span>
-<span class="n">y_pred</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">mod_df</span><span class="p">[</span><span class="s">&#39;gal_class&#39;</span><span class="p">])[:</span><span class="n">test_size</span><span class="p">]</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">mod_df</span><span class="p">[</span><span class="s1">&#39;gal_class&#39;</span><span class="p">])[:</span><span class="n">test_size</span><span class="p">]</span>
 
 
 <span class="n">lm</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
 <span class="n">res_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">pca_df</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">test_size</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
 
-<span class="n">res_df</span><span class="p">[</span><span class="s">&#39;actual&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">y_pred</span><span class="p">)</span>
-<span class="n">res_df</span><span class="p">[</span><span class="s">&#39;pred&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">lm</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">pca_df</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">test_size</span><span class="p">]))</span>
-<span class="n">res_df</span><span class="p">[</span><span class="s">&#39;cor&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">res_df</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">row</span><span class="p">:</span><span class="nb">int</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s">&#39;actual&#39;</span><span class="p">]</span><span class="o">==</span><span class="n">row</span><span class="p">[</span><span class="s">&#39;pred&#39;</span><span class="p">]),</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="k">print</span> <span class="nb">sum</span><span class="p">(</span><span class="n">res_df</span><span class="p">[</span><span class="s">&#39;actual&#39;</span><span class="p">]),</span><span class="nb">sum</span><span class="p">(</span><span class="n">res_df</span><span class="p">[</span><span class="s">&#39;pred&#39;</span><span class="p">]),</span><span class="nb">sum</span><span class="p">(</span><span class="n">res_df</span><span class="p">[</span><span class="s">&#39;cor&#39;</span><span class="p">])</span>
-<span class="k">print</span> <span class="s">&#39;Overall correct fraction = &#39;</span><span class="p">,</span><span class="nb">sum</span><span class="p">(</span><span class="n">res_df</span><span class="p">[</span><span class="s">&#39;cor&#39;</span><span class="p">])</span><span class="o">/</span><span class="nb">float</span><span class="p">(</span><span class="n">test_size</span><span class="p">)</span>
+<span class="n">res_df</span><span class="p">[</span><span class="s1">&#39;actual&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">y_pred</span><span class="p">)</span>
+<span class="n">res_df</span><span class="p">[</span><span class="s1">&#39;pred&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">lm</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">pca_df</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">test_size</span><span class="p">]))</span>
+<span class="n">res_df</span><span class="p">[</span><span class="s1">&#39;cor&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">res_df</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">row</span><span class="p">:</span><span class="nb">int</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;actual&#39;</span><span class="p">]</span><span class="o">==</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;pred&#39;</span><span class="p">]),</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">print</span> <span class="nb">sum</span><span class="p">(</span><span class="n">res_df</span><span class="p">[</span><span class="s1">&#39;actual&#39;</span><span class="p">]),</span><span class="nb">sum</span><span class="p">(</span><span class="n">res_df</span><span class="p">[</span><span class="s1">&#39;pred&#39;</span><span class="p">]),</span><span class="nb">sum</span><span class="p">(</span><span class="n">res_df</span><span class="p">[</span><span class="s1">&#39;cor&#39;</span><span class="p">])</span>
+<span class="k">print</span> <span class="s1">&#39;Overall correct fraction = &#39;</span><span class="p">,</span><span class="nb">sum</span><span class="p">(</span><span class="n">res_df</span><span class="p">[</span><span class="s1">&#39;cor&#39;</span><span class="p">])</span><span class="o">/</span><span class="nb">float</span><span class="p">(</span><span class="n">test_size</span><span class="p">)</span>
 <span class="n">res_df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+
+<span class="c1"># I&#39;ve printed out the explained variance ratios below.  The rapid falloff in the </span>
+<span class="c1"># numbers means that the first few variables contain most of the model&#39;s explanatory power</span>
 </pre></div>
 
 </div>
@@ -8688,7 +8758,7 @@ Overall correct fraction =  0.9466
 <div class="prompt input_prompt">In&nbsp;[67]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="n">pca</span><span class="o">.</span><span class="n">components_</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">pca</span><span class="o">.</span><span class="n">components_</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span>
 </pre></div>
 
 </div>
@@ -8736,23 +8806,23 @@ Overall correct fraction =  0.9466
 <div class="prompt input_prompt">In&nbsp;[68]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="c"># Performance here is quite impressive compared to previous cases, with a much smaller subset of features.</span>
-<span class="c"># Unfortunately, we are back to misclassifying our merger cases, so the next step would be to try to boost these </span>
-<span class="c"># cases in the training set with resampling, if recovering those is a priority</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Let&#39;s look at the usual confusion matrix</span>
 
 <span class="k">print</span> <span class="nb">len</span><span class="p">(</span><span class="n">res_df</span><span class="p">)</span>
 <span class="k">print</span> <span class="n">res_df</span><span class="o">.</span><span class="n">actual</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
 
-<span class="c"># 0 - Ellipticals</span>
-<span class="c"># 1 - Spirals (face-on)</span>
-<span class="c"># 2 - Spirals (edge-on)</span>
-<span class="c"># 3 - Mergers</span>
+<span class="c1"># 0 - Ellipticals</span>
+<span class="c1"># 1 - Spirals (face-on)</span>
+<span class="c1"># 2 - Spirals (edge-on)</span>
+<span class="c1"># 3 - Mergers</span>
 
 <span class="n">imax</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">res_df</span><span class="o">.</span><span class="n">actual</span><span class="p">))</span>
 <span class="n">rep</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">imax</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">imax</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span><span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">res_df</span><span class="p">)):</span>
     <span class="n">rep</span><span class="p">[</span><span class="n">res_df</span><span class="o">.</span><span class="n">actual</span><span class="p">[</span><span class="n">i</span><span class="p">]][</span><span class="n">res_df</span><span class="o">.</span><span class="n">pred</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span><span class="o">+=</span><span class="mi">1</span>
-<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">rep</span><span class="p">)</span> <span class="c"># rows are actual class, columns are predicted</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">rep</span><span class="p">)</span> 
+
+<span class="c1"># rows are actual class, columns are predicted</span>
 </pre></div>
 
 </div>
@@ -8838,10 +8908,27 @@ Name: actual, dtype: int64
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Performance here is impressive compared to previous cases, with a much smaller subset of features.</span>
+<span class="c1"># ~95% accuracy with first 5 PCA features</span>
+
+<span class="c1"># Unfortunately, we are back to misclassifying our merger cases, so the next step would be to try  </span>
+<span class="c1"># to boost these cases in the training set with resampling, if recovering those is a priority.</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
 <div class="prompt input_prompt">In&nbsp;[69]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="c"># positions of galaxy targets on the sky ()</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># positions of galaxy targets on the sky (not essential to this project, but interesting)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">phot_df</span><span class="o">.</span><span class="n">ra</span><span class="p">,</span><span class="n">phot_df</span><span class="o">.</span><span class="n">dec</span><span class="p">)</span>
 </pre></div>
 
@@ -11477,7 +11564,7 @@ ERERyYMCZxERERGRPChwFhERERHJgwJnEREREZE8/H8l9V1JYlx12AAAAABJRU5ErkJggg==
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre> 
+<div class=" highlight hl-ipython2"><pre><span></span> 
 </pre></div>
 
 </div>
