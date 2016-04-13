@@ -8486,7 +8486,8 @@ Name: actual, dtype: int64
 <div class="prompt input_prompt">In&nbsp;[65]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># We can compare the error matrix here to the unsampled set, definitely improvement in the last two classes</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># We can compare the error matrix here to the unsampled set, definitely improvement in the </span>
+<span class="c1"># last two classes</span>
 <span class="c1"># Classes:</span>
 <span class="c1"># 0 - Ellipticals</span>
 <span class="c1"># 1 - Spirals (face-on)</span>
@@ -8599,8 +8600,9 @@ Name: actual, dtype: int64
 <div class="prompt input_prompt">In&nbsp;[66]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># To avoid having to select features by hand, and avoid problems with collinearity and overfitting, </span>
-<span class="c1"># it makes sense to run the feature set through a PCA transform, and just model based on a few variables.  </span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># To avoid having to select features by hand, and avoid problems with collinearity and </span>
+<span class="c1"># overfitting, it makes sense to run the feature set through a PCA transform, and just </span>
+<span class="c1"># model based on a few variables.</span>
 
 <span class="c1"># Let&#39;s see if this improves performance over our previous method of selecting variables </span>
 <span class="c1"># based on correlation</span>
@@ -8911,7 +8913,7 @@ Name: actual, dtype: int64
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Performance here is impressive compared to previous cases, with a much smaller subset of features.</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Performance here is impressive compared to previous cases, with a much smaller features subset.</span>
 <span class="c1"># ~95% accuracy with first 5 PCA features</span>
 
 <span class="c1"># Unfortunately, we are back to misclassifying our merger cases, so the next step would be to try  </span>
